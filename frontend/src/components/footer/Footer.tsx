@@ -13,7 +13,7 @@ const Footer =() => {
                 }}
             >
                 <p style={{ fontSize:"30px", textAlign:"center", padding:"20px" }}>
-                    Built With love by SSS❤️
+                    Revolutionizing The Way We Interact
                 </p>
             </div>
         </footer>

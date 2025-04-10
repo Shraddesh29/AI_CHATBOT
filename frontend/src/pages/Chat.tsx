@@ -18,6 +18,9 @@ const Chat = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const auth = useAuth();
     const [chatMessages, setChatMessages] = useState<Message[]>([])
+    // AI feature
+    const [personality, setPersonality] = useState("normal");
+//ai..
     const handleSubmit = async () => {
         const content = inputRef.current?.value as string;
         if (inputRef && inputRef.current) {
@@ -25,7 +28,7 @@ const Chat = () => {
         }
         const newMessage: Message = { role: "user", content};
         setChatMessages((prev) => [...prev, newMessage]);  
-        const chatData = await sendChatRequest(content);
+        const chatData = await sendChatRequest(content, personality);
         setChatMessages([...chatData.chats]);
     };
 
@@ -145,6 +148,27 @@ const Chat = () => {
                         <ChatItem content={chat.content} role={chat.role} key={index} />
                     ))}
                 </Box>
+                     
+                <div style={{ marginBottom: "16px", color: "white" }}>
+                    <label style={{ marginRight: "10px", fontSize: "18px" }}>Personality Mode:</label>
+                    <select
+                        value={personality}
+                        onChange={(e) => setPersonality(e.target.value)}
+                        style={{
+                        padding: "8px",
+                        borderRadius: "8px",
+                        backgroundColor: "#1c1c1c",
+                        color: "white",
+                        border: "1px solid #333",
+                        }}
+                    >
+                        <option value="normal">Normal</option>
+                        <option value="professional">Professional 🧑‍💼</option>
+                        <option value="friendly">Friendly 😄</option>
+                        <option value="motivational">Motivational 💪</option>
+                        <option value="sarcastic">Sarcastic 😏</option>
+                    </select>
+                </div>
                 <div 
                     style={{
                         width:"100%",

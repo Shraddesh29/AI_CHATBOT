@@ -26,9 +26,9 @@ export const checkAuthStatus = async () => {
     return data;
     
 };
-
-export const sendChatRequest = async (message: string) => {
-  const res = await axios.post("/chat/new", {message});
+//ai add features
+export const sendChatRequest = async (message: string , personality: string) => {
+  const res = await axios.post("/chat/new", {message, personality});
 
   if (res.status !== 200){
       throw new Error("Unable to send chat");

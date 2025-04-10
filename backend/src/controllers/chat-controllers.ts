@@ -8,7 +8,7 @@ type ChatCompletionRequestMessage = {
     role: 'system' | 'user' | 'assistant';
     content: string;
 };
-
+/*
 export const generateChatCompletion = async (
     req: Request,
     res: Response,
@@ -33,7 +33,7 @@ export const generateChatCompletion = async (
 
         // Get latest response
         const chatCompletion = await groq.chat.completions.create({
-            model: "llama3-groq-70b-8192-tool-use-preview",  // Update with the correct model
+            model: "llama-3.3-70b-versatile",  // Update with the correct model
             messages: chats,
             temperature: 0.5,
             max_tokens: 1024,
@@ -57,6 +57,83 @@ export const generateChatCompletion = async (
         return res.status(500).json({ message: "Something went wrong" });
     }
 };
+*/
+// ai 
+export const generateChatCompletion = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { message, personality } = req.body;
+  
+    try {
+      const user = await User.findById(res.locals.jwtData.id);
+      if (!user) {
+        return res.status(401).json({ message: "User not registered OR Token malfunctioned" });
+      }
+  
+      // Base personality system prompt
+      let promptIntro = "";
+      switch (personality) {
+        case "professional":
+          promptIntro = "You are a professional and concise AI assistant.";
+          break;
+        case "friendly":
+          promptIntro = "You are a friendly chatbot that talks like a supportive best friend.";
+          break;
+        case "motivational":
+          promptIntro = "You are a motivational coach that inspires users with every message.";
+          break;
+        case "sarcastic":
+          promptIntro = "You are a sarcastic chatbot who replies with humor and wit.";
+          break;
+        default:
+          promptIntro = "You are a helpful and knowledgeable assistant.";
+      }
+  
+      // Format chat history
+      const chats = user.chats.map(({ role, content }) => ({ role, content })) as ChatCompletionRequestMessage[];
+  
+      // Insert system message as the first message
+      const messages: ChatCompletionRequestMessage[] = [
+        { role: "system", content: promptIntro },
+        ...chats,
+        { role: "user", content: message },
+      ];
+  
+      // Save user input message
+      user.chats.push({ role: "user", content: message });
+  
+      // Call Groq API
+      const groq = new Groq();
+  
+      const chatCompletion = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile", // Use your preferred model
+        messages,
+        temperature: 0.5,
+        max_tokens: 1024,
+        top_p: 0.65,
+        stream: true,
+        stop: null
+      });
+  
+      // Stream + combine assistant response
+      let assistantResponse = '';
+      for await (const chunk of chatCompletion) {
+        assistantResponse += chunk.choices[0]?.delta?.content || '';
+      }
+  
+      // Save assistant reply to DB
+      user.chats.push({ role: "assistant", content: assistantResponse });
+      await user.save();
+  
+      return res.status(200).json({ chats: user.chats });
+    } catch (error) {
+      console.error("Error in generateChatCompletion:", error);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  };
+// ai up  
 
 //youtube ----
 export const  sendChatsToUser = async(
