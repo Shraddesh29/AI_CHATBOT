@@ -84,3 +84,5 @@ Final-year BCA student | MERN & AI Enthusiast
 
 Contributions, ideas, and pull requests are welcome!
 
+## 🌐 Live Demo  
+Check it out 👉 [chatbyshraddesh.vercel.app](https://chatbyshraddesh.vercel.app)

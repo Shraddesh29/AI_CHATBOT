@@ -1,7 +1,14 @@
 import app from "./app.js";
 import { connectToDatabase } from "./db/connection.js";
+import cors from "cors";
 
-
+app.use(
+    cors({
+      origin: "https://chatbyshraddesh.vercel.app", // ✅ your frontend URL
+      credentials: true,
+    })
+  );
+  
 //connections and listeneres
 const PORT = process.env.PORT || 5000;
 connectToDatabase().then(() => {
@@ -9,4 +16,6 @@ connectToDatabase().then(() => {
         console.log("Server Open & Connected To database")); 
 
 }).catch((err) => console.log(err));
+
+
 
