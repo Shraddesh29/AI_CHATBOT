@@ -62,7 +62,7 @@ export const userLogin = async (req, res, next) => {
         //create token and store cookie
         res.clearCookie(COOKIE_NAME, {
             httpOnly: true,
-            domain: "localhost",
+            domain: "https://ai-chatbot-backend-s9jb.onrender.com",
             signed: true,
             path: "/",
         });
@@ -71,7 +71,7 @@ export const userLogin = async (req, res, next) => {
         expires.setDate(expires.getDate() + 7);
         res.cookie(COOKIE_NAME, token, {
             path: "/",
-            domain: "localhost",
+            domain: "https://ai-chatbot-backend-s9jb.onrender.com",
             expires,
             httpOnly: true,
             signed: true,
