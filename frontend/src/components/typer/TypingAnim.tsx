@@ -20,4 +20,4 @@ const TypingAnim = () => {
     )
 }
 
-export default TypingAnim
+export default TypingAnim;

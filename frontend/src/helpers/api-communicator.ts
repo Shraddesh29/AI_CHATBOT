@@ -1,6 +1,8 @@
 import axios from "axios";
 export const loginUser = async (email: string, password: string) => {
-  const res = await axios.post("/user/login", { email, password });
+  const res = await axios.post("https://ai-chatbot-backend-s9jb.onrender.com/user/login", { email, password },{
+    withCredentials: true,
+  });
   if (res.status !== 200)  {
     throw new Error("Unable to login");
   }
@@ -9,7 +11,9 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 export const signupUser = async ( name:string, email: string, password: string) => {
-  const res = await axios.post("/user/signup", { name, email, password });
+  const res = await axios.post("https://ai-chatbot-backend-s9jb.onrender.com/user/signup", { name, email, password },{
+    withCredentials: true,
+  });
   if (res.status !== 201)  {
     throw new Error("Unable to Signup");
   }
@@ -18,7 +22,9 @@ export const signupUser = async ( name:string, email: string, password: string) 
 };
 
 export const checkAuthStatus = async () => {
-    const res = await axios.get("/user/auth-status",);
+    const res = await axios.get("https://ai-chatbot-backend-s9jb.onrender.com/user/auth-status",{
+      withCredentials: true,
+    });
     if (res.status !== 200){
         throw new Error("Unable to authenticate");
     }
@@ -28,7 +34,9 @@ export const checkAuthStatus = async () => {
 };
 //ai add features
 export const sendChatRequest = async (message: string , personality: string) => {
-  const res = await axios.post("/chat/new", {message, personality});
+  const res = await axios.post("https://ai-chatbot-backend-s9jb.onrender.com/chat/new", {message, personality},{
+    withCredentials: true,
+  });
 
   if (res.status !== 200){
       throw new Error("Unable to send chat");
@@ -39,7 +47,9 @@ export const sendChatRequest = async (message: string , personality: string) => 
 };
 
 export const getUserChats = async () => {
-  const res = await axios.get("/chat/all-chats");
+  const res = await axios.get("https://ai-chatbot-backend-s9jb.onrender.com/chat/all-chats",{
+    withCredentials: true,
+  });
 
   if (res.status !== 200){
       throw new Error("Unable to send chat");
@@ -50,7 +60,9 @@ export const getUserChats = async () => {
 };
 
 export const deleteUserChats = async () => {
-  const res = await axios.delete("/chat/delete");
+  const res = await axios.delete("https://ai-chatbot-backend-s9jb.onrender.com/chat/delete",{
+    withCredentials: true
+  });
 
   if (res.status !== 200){
       throw new Error("Unable to delete chats");
@@ -61,7 +73,9 @@ export const deleteUserChats = async () => {
 };
 
 export const logoutUser = async () => {
-  const res = await axios.get("/user/logout");
+  const res = await axios.get("https://ai-chatbot-backend-s9jb.onrender.com/user/logout",{
+    withCredentials: true
+  });
 
   if (res.status !== 200){
       throw new Error("Unable to logout");

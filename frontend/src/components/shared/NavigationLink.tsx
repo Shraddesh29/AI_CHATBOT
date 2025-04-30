@@ -21,4 +21,4 @@ const NavigationLink = (props: Props) => {
     );
 };
 
-export default NavigationLink
+export default NavigationLink;

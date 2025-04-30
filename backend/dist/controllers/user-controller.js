@@ -26,19 +26,23 @@ export const userSignup = async (req, res, next) => {
         //create token and store cookie
         res.clearCookie(COOKIE_NAME, {
             httpOnly: true,
-            domain: "localhost",
+            //domain: "localhost", 
             signed: true,
             path: "/",
+            sameSite: "none",
+            secure: true,
         });
         const token = createToken(user._id.toString(), user.email, "7d");
         const expires = new Date();
         expires.setDate(expires.getDate() + 7);
         res.cookie(COOKIE_NAME, token, {
             path: "/",
-            domain: "localhost",
+            //domain: "localhost", 
             expires,
             httpOnly: true,
             signed: true,
+            sameSite: "none",
+            secure: true,
         });
         return res.status(201).json({ message: "OK", name: user.name, email: user.email });
     }
@@ -62,19 +66,25 @@ export const userLogin = async (req, res, next) => {
         //create token and store cookie
         res.clearCookie(COOKIE_NAME, {
             httpOnly: true,
-            domain: "https://ai-chatbot-backend-s9jb.onrender.com",
+            //domain: "https://ai-chatbot-backend-s9jb.onrender.com", 
+            //domain: "localhost",
             signed: true,
             path: "/",
+            sameSite: "none",
+            secure: true,
         });
         const token = createToken(user._id.toString(), user.email, "7d");
         const expires = new Date();
         expires.setDate(expires.getDate() + 7);
         res.cookie(COOKIE_NAME, token, {
             path: "/",
-            domain: "https://ai-chatbot-backend-s9jb.onrender.com",
+            //domain: "https://ai-chatbot-backend-s9jb.onrender.com", 
+            //domain: "localhost",
             expires,
             httpOnly: true,
             signed: true,
+            sameSite: "none",
+            secure: true,
         });
         return res.status(200).json({ message: "OK", name: user.name, email: user.email });
     }
@@ -114,9 +124,11 @@ export const userLogout = async (req, res, next) => {
         }
         res.clearCookie(COOKIE_NAME, {
             httpOnly: true,
-            domain: "localhost",
+            //domain: "localhost", 
             signed: true,
             path: "/",
+            sameSite: "none",
+            secure: true,
         });
         return res.status(200).json({ message: "OK", name: user.name, email: user.email });
     }
