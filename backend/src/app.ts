@@ -16,4 +16,9 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(morgan("dev"));
 
 app.use("/api/v1",appRouter);
+
+app.get("/api/v1/ping", (req, res) => {
+    res.json({ message: "pong" });
+  });
+  
 export default app;
