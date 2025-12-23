@@ -108,7 +108,7 @@ export const generateChatCompletion = async (
       const groq = new Groq();
   
       const chatCompletion = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile", // Use your preferred model
+        model: "llama-3.1-8b-instant", // Use your preferred model
         messages,
         temperature: 0.5,
         max_tokens: 1024,
